@@ -1,6 +1,5 @@
-//alert('Hello world');
-
-let myName = 'Bob';
+//alert("hello world")
+let myName = 'Sharmila';
 document.write(myName);
-myName = 'John Doe';
-document.write(myName);
+favoriteFood = '  I like chocolate';
+document.write(favoriteFood);
