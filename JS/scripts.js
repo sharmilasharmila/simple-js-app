@@ -14,3 +14,13 @@ let pokemonList = [{
     type:['Rain-dish','torrent']
   }
 ];
+for(let i=0; i<3; i++)
+  {
+       document.write(pokemonList[i].name + ' (height :' + pokemonList[i].height + ')');
+
+       //checks if pokemon height is greater than 6.5
+       if(pokemonList[i].height > 6.5)
+         document.write('-' +" Wow, that\'s big! " + '<br>');
+       else
+         document.write('<br>');
+  }
