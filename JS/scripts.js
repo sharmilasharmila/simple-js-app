@@ -14,7 +14,7 @@ let pokemonList = [{
     type:['Rain-dish','torrent']
   }
 ];
-for(let i=0; i<3; i++)
+for(let i=0; i<pokemonList.length; i++)
   {
        document.write(pokemonList[i].name + ' (height :' + pokemonList[i].height + ')');
 
