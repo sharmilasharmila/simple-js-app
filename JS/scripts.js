@@ -89,18 +89,20 @@ pokemonRepository.loadList().then(function() {
 //});
 var sh_message=document.querySelector('#sh_message');
 function showLoadingMessage(){
-if (sh_message.style.display === "none") {
+if (sh_message.style.display = "none") {
     sh_message.style.display = "block";
   }
 }
 function hideLoadingMessage(){
-	if (sh_message.style.display === "block"){
+	if (sh_message.style.display = "block"){
     sh_message.style.display = "none";
   }
 }
+
 let modalContainer = document.querySelector('#modal-container');
 
 function showModal(pokemon) {
+  //console.log(pokemon);
   modalContainer.innerHTML = '';
 
   let modal = document.createElement('div');
