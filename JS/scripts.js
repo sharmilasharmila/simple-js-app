@@ -16,6 +16,12 @@ let pokemonRepository = (function(){
   let sh_button = document.createElement('button');
   sh_button.innerText=pokemon.name;
   sh_button.classList.add('sharmila-pokemon-button');
+  sh_button.classList.add('btn');
+  sh_button.classList.add('btn-info');
+
+  sh_listItem.classList.add('group-list-item');
+  sh_button.setAttribute("data-toggle", "modal"); //this works with bootstrap to open the modal when the pokemon name button is clicked
+  sh_button.setAttribute("data-target", "#pokemonModal");
   sh_listItem.appendChild(sh_button);
   sh_ul.appendChild(sh_listItem);
   //
@@ -44,23 +50,23 @@ let pokemonRepository = (function(){
     }).catch(function (e) {
       console.error(e);
     })
-	  showLoadingMessage();
+	  //showLoadingMessage();
   }
 
 
 
   function loadDetails(item) {
-	  showLoadingMessage();
+	  //showLoadingMessage();
     let url = item.detailsUrl;
     return fetch(url).then(function (response) {
       return response.json();
     }).then(function (details) {
-		hideLoadingMessage();
+	//	hideLoadingMessage();
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
       item.types = details.types;
     }).catch(function (e) {
-		hideLoadingMessage();
+//		hideLoadingMessage();
       console.error(e);
     });
   }
@@ -79,75 +85,33 @@ let pokemonRepository = (function(){
 
 
 pokemonRepository.loadList().then(function() {
-	hideLoadingMessage();
+//	hideLoadingMessage();
   pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
   });
 });
-//pokemonRepository.getAll().forEach(function(item){
-//	pokemonRepository.addListItem(item);
-//});
-var sh_message=document.querySelector('#sh_message');
-function showLoadingMessage(){
-if (sh_message.style.display = "none") {
-    sh_message.style.display = "block";
+
+//showModal function added
+  function showModal(pokemon) {
+    let modalBody = $(".modal-body");
+    let modalTitle = $(".modal-title");
+
+    modalTitle.empty(); //empties anything that was previously stored in these variables
+    modalBody.empty();
+
+    //add the new content into the new "modal" div (Name, height, and image content)
+    //Name element
+    let nameElement = $("<h1>" + pokemon.name + "</h1>");
+
+    //Height content
+    let heightElement = $("<p>" + "Height: " + pokemon.height + "</p>");
+
+    //Image content
+    let imageElement = $('<img class="modal-img" style="width:50%">');
+    imageElement.attr("src", pokemon.imageUrl);
+
+    //appends the children to their parent containers
+    modalTitle.append(nameElement);
+    modalBody.append(imageElement);
+    modalBody.append(heightElement);
   }
-}
-function hideLoadingMessage(){
-	if (sh_message.style.display = "block"){
-    sh_message.style.display = "none";
-  }
-}
-
-let modalContainer = document.querySelector('#modal-container');
-
-function showModal(pokemon) {
-  modalContainer.innerHTML = '';
-
-  let modal = document.createElement('div');
-  modal.classList.add('modal');
-
-  let closeButtonElement = document.createElement('button');
-  closeButtonElement.classList.add('modal-close');
-  closeButtonElement.innerText = 'Close';
-  closeButtonElement.addEventListener('click', hideModal);
-
-  let titleElement = document.createElement('h1');
-  titleElement.innerText = pokemon.name;
-
-  let contentElement = document.createElement('p');
-  contentElement.innerText = 'Height: ' + pokemon.height;
-
-  let imageElement = document.createElement('img');
-  imageElement.src = pokemon.imageUrl;
-
-  modal.appendChild(closeButtonElement);
-  modal.appendChild(titleElement);
-  modal.appendChild(contentElement);
-  modal.appendChild(imageElement);
-  modalContainer.appendChild(modal);
-
-  modalContainer.classList.add('is-visible');
-}
-
-function hideModal() {
-     modalContainer.classList.remove('is-visible');
-}
-
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-      hideModal();
-    }
-  });
-  modalContainer.addEventListener('click', (e) => {
-    // Since this is also triggered when clicking INSIDE the modal
-    // We only want to close if the user clicks directly on the overlay
-    let target = e.target;
-    if (target === modalContainer) {
-      hideModal();
-    }
-  });
-
-  document.querySelector('#show-modal').addEventListener('click', () => {
-      showModal('Modal title', 'This is the modal content!');
-    });
